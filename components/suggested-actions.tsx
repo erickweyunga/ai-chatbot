@@ -20,24 +20,28 @@ function PureSuggestedActions({
 }: SuggestedActionsProps) {
   const suggestedActions = [
     {
-      title: 'What are the advantages',
-      label: 'of using Next.js?',
-      action: 'What are the advantages of using Next.js?',
+      title: 'Verify CCM election victory',
+      label: 'CCM won 99% of village seats in 2024',
+      action:
+        "CCM won 99% of all village chairperson positions in Tanzania's November 2024 local government elections, while opposition parties like Chadema barely secured 1% of seats.",
     },
     {
-      title: 'Write code to',
-      label: `demonstrate djikstra's algorithm`,
-      action: `Write code to demonstrate djikstra's algorithm`,
+      title: 'Check President Hassan claim',
+      label: 'First female president in East Africa',
+      action:
+        'President Samia Suluhu Hassan is the first female president in East African history and the only current female head of state in Africa.',
     },
     {
-      title: 'Help me write an essay',
-      label: `about silicon valley`,
-      action: `Help me write an essay about silicon valley`,
+      title: 'Fact-check Tundu Lissu case',
+      label: 'Opposition leader serving prison sentence',
+      action:
+        "Under President Samia Hassan's administration, opposition leader Tundu Lissu has been arrested seven times in 2024 and is currently serving a 15-year prison sentence for sedition and money laundering charges handed down by the High Court in December 2024.",
     },
     {
-      title: 'What is the weather',
-      label: 'in San Francisco?',
-      action: 'What is the weather in San Francisco?',
+      title: 'Verify electoral commission',
+      label: 'Independent commission with full autonomy',
+      action:
+        'President Samia Hassan established an Independent National Electoral Commission (INEC) in 2024 that has full autonomy from the presidency in appointing commissioners and overseeing elections.',
     },
   ];
 

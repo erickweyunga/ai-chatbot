@@ -219,12 +219,6 @@ function PureArtifact({
 
   const [isToolbarVisible, setIsToolbarVisible] = useState(false);
 
-  /*
-   * NOTE: if there are no documents, or if
-   * the documents are being fetched, then
-   * we mark it as the current version.
-   */
-
   const isCurrentVersion =
     documents && documents.length > 0
       ? currentVersionIndex === documents.length - 1
@@ -257,60 +251,25 @@ function PureArtifact({
       {artifact.isVisible && (
         <motion.div
           data-testid="artifact"
-          className="flex flex-row h-dvh w-dvw fixed top-0 left-0 z-50 bg-transparent"
-          initial={{ opacity: 1 }}
+          className="grid grid-cols-2 h-dvh w-dvw fixed top-0 left-0 z-50 bg-background"
+          initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { delay: 0.4 } }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
         >
           {!isMobile && (
             <motion.div
-              className="fixed bg-background h-dvh"
-              initial={{
-                width: isSidebarOpen ? windowWidth - 256 : windowWidth,
-                right: 0,
-              }}
-              animate={{ width: windowWidth, right: 0 }}
-              exit={{
-                width: isSidebarOpen ? windowWidth - 256 : windowWidth,
-                right: 0,
-              }}
-            />
-          )}
-
-          {!isMobile && (
-            <motion.div
-              className="relative w-[400px] bg-muted dark:bg-background h-dvh shrink-0"
-              initial={{ opacity: 0, x: 10, scale: 1 }}
-              animate={{
-                opacity: 1,
-                x: 0,
-                scale: 1,
-                transition: {
-                  delay: 0.2,
-                  type: 'spring',
-                  stiffness: 200,
-                  damping: 30,
-                },
-              }}
-              exit={{
-                opacity: 0,
-                x: 0,
-                scale: 1,
-                transition: { duration: 0 },
-              }}
+              className="overflow-hidden bg-muted dark:bg-background h-dvh shrink-0"
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.1, duration: 0.3 }}
             >
-              <AnimatePresence>
-                {!isCurrentVersion && (
-                  <motion.div
-                    className="left-0 absolute h-dvh w-[400px] top-0 bg-zinc-900/50 z-50"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                  />
-                )}
-              </AnimatePresence>
-
-              <div className="flex flex-col h-full justify-between items-center">
+              <motion.div
+                className="flex flex-col size-full justify-between items-center"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
                 <ArtifactMessages
                   chatId={chatId}
                   status={status}
@@ -338,78 +297,43 @@ function PureArtifact({
                     selectedVisibilityType={selectedVisibilityType}
                   />
                 </form>
-              </div>
+              </motion.div>
             </motion.div>
           )}
 
           <motion.div
-            className="fixed dark:bg-muted bg-background h-dvh flex flex-col overflow-y-scroll md:border-l dark:border-zinc-700 border-zinc-200"
+            className="dark:bg-muted bg-background h-dvh !w-full flex flex-col md:border-l dark:border-zinc-700 border-zinc-200"
             initial={
               isMobile
                 ? {
-                    opacity: 1,
                     x: artifact.boundingBox.left,
                     y: artifact.boundingBox.top,
-                    height: artifact.boundingBox.height,
                     width: artifact.boundingBox.width,
-                    borderRadius: 50,
+                    height: artifact.boundingBox.height,
+                    borderRadius: 24,
                   }
                 : {
-                    opacity: 1,
-                    x: artifact.boundingBox.left,
+                    x: artifact.boundingBox.left + 400,
                     y: artifact.boundingBox.top,
-                    height: artifact.boundingBox.height,
                     width: artifact.boundingBox.width,
-                    borderRadius: 50,
+                    height: artifact.boundingBox.height,
+                    borderRadius: 24,
                   }
             }
-            animate={
-              isMobile
-                ? {
-                    opacity: 1,
-                    x: 0,
-                    y: 0,
-                    height: windowHeight,
-                    width: windowWidth ? windowWidth : 'calc(100dvw)',
-                    borderRadius: 0,
-                    transition: {
-                      delay: 0,
-                      type: 'spring',
-                      stiffness: 200,
-                      damping: 30,
-                      duration: 5000,
-                    },
-                  }
-                : {
-                    opacity: 1,
-                    x: 400,
-                    y: 0,
-                    height: windowHeight,
-                    width: windowWidth
-                      ? windowWidth - 400
-                      : 'calc(100dvw-400px)',
-                    borderRadius: 0,
-                    transition: {
-                      delay: 0,
-                      type: 'spring',
-                      stiffness: 200,
-                      damping: 30,
-                      duration: 5000,
-                    },
-                  }
-            }
-            exit={{
-              opacity: 0,
-              scale: 0.5,
-              transition: {
-                delay: 0.1,
-                type: 'spring',
-                stiffness: 600,
-                damping: 30,
-              },
+            animate={{
+              x: 0,
+              y: 0,
+              height: '100vh',
+              borderRadius: 0,
             }}
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           >
-            <div className="p-2 flex flex-row justify-between items-start">
+            <motion.div
+              className="p-2 flex flex-row justify-between items-start"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
               <div className="flex flex-row gap-4 items-start">
                 <ArtifactCloseButton />
 
@@ -445,9 +369,14 @@ function PureArtifact({
                 metadata={metadata}
                 setMetadata={setMetadata}
               />
-            </div>
+            </motion.div>
 
-            <div className="dark:bg-muted bg-background h-full overflow-y-scroll !max-w-full items-center">
+            <motion.div
+              className="dark:bg-muted bg-background h-full overflow-y-scroll !max-w-full items-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
               <artifactDefinition.content
                 title={artifact.title}
                 content={
@@ -470,26 +399,39 @@ function PureArtifact({
 
               <AnimatePresence>
                 {isCurrentVersion && (
-                  <Toolbar
-                    isToolbarVisible={isToolbarVisible}
-                    setIsToolbarVisible={setIsToolbarVisible}
-                    sendMessage={sendMessage}
-                    status={status}
-                    stop={stop}
-                    setMessages={setMessages}
-                    artifactKind={artifact.kind}
-                  />
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <Toolbar
+                      isToolbarVisible={isToolbarVisible}
+                      setIsToolbarVisible={setIsToolbarVisible}
+                      sendMessage={sendMessage}
+                      status={status}
+                      stop={stop}
+                      setMessages={setMessages}
+                      artifactKind={artifact.kind}
+                    />
+                  </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
 
             <AnimatePresence>
               {!isCurrentVersion && (
-                <VersionFooter
-                  currentVersionIndex={currentVersionIndex}
-                  documents={documents}
-                  handleVersionChange={handleVersionChange}
-                />
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                >
+                  <VersionFooter
+                    currentVersionIndex={currentVersionIndex}
+                    documents={documents}
+                    handleVersionChange={handleVersionChange}
+                  />
+                </motion.div>
               )}
             </AnimatePresence>
           </motion.div>

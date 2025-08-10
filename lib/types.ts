@@ -7,6 +7,7 @@ import type { InferUITool, UIMessage } from 'ai';
 
 import type { ArtifactKind } from '@/components/artifact';
 import type { Suggestion } from './db/schema';
+import type { webSearch } from './ai/tools/web_search';
 
 export type DataPart = { type: 'append-message'; message: string };
 
@@ -17,6 +18,8 @@ export const messageMetadataSchema = z.object({
 export type MessageMetadata = z.infer<typeof messageMetadataSchema>;
 
 type weatherTool = InferUITool<typeof getWeather>;
+// @ts-ignore
+type webSearchTool = InferUITool<typeof webSearch>;
 type createDocumentTool = InferUITool<ReturnType<typeof createDocument>>;
 type updateDocumentTool = InferUITool<ReturnType<typeof updateDocument>>;
 type requestSuggestionsTool = InferUITool<
@@ -28,6 +31,7 @@ export type ChatTools = {
   createDocument: createDocumentTool;
   updateDocument: updateDocumentTool;
   requestSuggestions: requestSuggestionsTool;
+  web_search: webSearchTool;
 };
 
 export type CustomUIDataTypes = {

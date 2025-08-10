@@ -1,7 +1,7 @@
 'use client';
 import cx from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import type { Vote } from '@/lib/db/schema';
 import { DocumentToolCall, DocumentToolResult } from './document';
 import { PencilEditIcon, SparklesIcon } from './icons';
@@ -19,6 +19,7 @@ import { MessageReasoning } from './message-reasoning';
 import type { UseChatHelpers } from '@ai-sdk/react';
 import type { ChatMessage } from '@/lib/types';
 import { useDataStream } from './data-stream-provider';
+import { SearchResultsWidget } from './web-search';
 
 // Type narrowing is handled by TypeScript's control flow analysis
 // The AI SDK provides proper discriminated unions for tool calls
@@ -138,7 +139,7 @@ const PurePreviewMessage = ({
                       <div
                         data-testid="message-content"
                         className={cn('flex flex-col gap-4', {
-                          'bg-primary text-primary-foreground px-3 py-2 rounded-xl':
+                          'bg-secondary text-primary px-3 py-2 rounded-xl':
                             message.role === 'user',
                         })}
                       >
@@ -159,6 +160,33 @@ const PurePreviewMessage = ({
                         setMode={setMode}
                         setMessages={setMessages}
                         regenerate={regenerate}
+                      />
+                    </div>
+                  );
+                }
+              }
+
+              if (type === 'tool-web_search') {
+                const { state } = part;
+
+                if (state === 'input-available') {
+                  const { toolCallId, input } = part;
+                  return (
+                    <div key={toolCallId}>
+                      <SearchResultsWidget
+                        results={[]}
+                        query={(input as any).query}
+                      />
+                    </div>
+                  );
+                }
+                if (state === 'output-available') {
+                  const { toolCallId, output, input } = part;
+                  return (
+                    <div key={toolCallId}>
+                      <SearchResultsWidget
+                        results={output}
+                        query={(input as any).query}
                       />
                     </div>
                   );
@@ -341,6 +369,18 @@ export const PreviewMessage = memo(
 
 export const ThinkingMessage = () => {
   const role = 'assistant';
+  const [dots, setDots] = useState('');
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDots((prev) => {
+        if (prev.length >= 3) return '';
+        return `${prev}.`;
+      });
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <motion.div
@@ -359,12 +399,31 @@ export const ThinkingMessage = () => {
         )}
       >
         <div className="size-8 flex items-center rounded-full justify-center ring-1 shrink-0 ring-border">
-          <SparklesIcon size={14} />
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{
+              duration: 2,
+              repeat: Number.POSITIVE_INFINITY,
+              ease: 'linear',
+            }}
+          >
+            <SparklesIcon size={14} />
+          </motion.div>
         </div>
 
         <div className="flex flex-col gap-2 w-full">
           <div className="flex flex-col gap-4 text-muted-foreground">
-            Hmm...
+            <span>Thinking{dots}</span>
+            <motion.div
+              className="w-full h-1 bg-muted rounded"
+              initial={{ width: '0%' }}
+              animate={{ width: '100%' }}
+              transition={{
+                duration: 3,
+                repeat: Number.POSITIVE_INFINITY,
+                ease: 'easeInOut',
+              }}
+            />
           </div>
         </div>
       </div>

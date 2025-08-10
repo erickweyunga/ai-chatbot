@@ -37,6 +37,7 @@ import { ChatSDKError } from '@/lib/errors';
 import type { ChatMessage } from '@/lib/types';
 import type { ChatModel } from '@/lib/ai/models';
 import type { VisibilityType } from '@/components/visibility-selector';
+import { webSearch } from '@/lib/ai/tools/web_search';
 
 export const maxDuration = 60;
 
@@ -158,12 +159,19 @@ export async function POST(request: Request) {
           stopWhen: stepCountIs(5),
           experimental_activeTools:
             selectedChatModel === 'chat-model-reasoning'
-              ? []
+              ? [
+                  'getWeather',
+                  'createDocument',
+                  'updateDocument',
+                  'requestSuggestions',
+                  'web_search',
+                ]
               : [
                   'getWeather',
                   'createDocument',
                   'updateDocument',
                   'requestSuggestions',
+                  'web_search',
                 ],
           experimental_transform: smoothStream({ chunking: 'word' }),
           tools: {
@@ -174,6 +182,8 @@ export async function POST(request: Request) {
               session,
               dataStream,
             }),
+            // @ts-ignore
+            web_search: webSearch,
           },
           experimental_telemetry: {
             isEnabled: isProductionEnvironment,

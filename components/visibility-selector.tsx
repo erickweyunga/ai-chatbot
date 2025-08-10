@@ -1,21 +1,10 @@
 'use client';
 
 import { type ReactNode, useMemo, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { cn } from '@/lib/utils';
-import {
-  CheckCircleFillIcon,
-  ChevronDownIcon,
-  GlobeIcon,
-  LockIcon,
-} from './icons';
+import { DropdownMenu } from '@/components/ui/dropdown-menu';
+import { GlobeIcon, LockIcon } from './icons';
 import { useChatVisibility } from '@/hooks/use-chat-visibility';
+import type { Button } from './ui/button';
 
 export type VisibilityType = 'private' | 'public';
 
@@ -61,7 +50,7 @@ export function VisibilitySelector({
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
-      <DropdownMenuTrigger
+      {/* <DropdownMenuTrigger
         asChild
         className={cn(
           'w-fit data-[state=open]:bg-accent data-[state=open]:text-accent-foreground',
@@ -77,9 +66,9 @@ export function VisibilitySelector({
           {selectedVisibility?.label}
           <ChevronDownIcon />
         </Button>
-      </DropdownMenuTrigger>
+      </DropdownMenuTrigger> */}
 
-      <DropdownMenuContent align="start" className="min-w-[300px]">
+      {/* <DropdownMenuContent align="start" className="min-w-[300px]">
         {visibilities.map((visibility) => (
           <DropdownMenuItem
             data-testid={`visibility-selector-item-${visibility.id}`}
@@ -104,7 +93,7 @@ export function VisibilitySelector({
             </div>
           </DropdownMenuItem>
         ))}
-      </DropdownMenuContent>
+      </DropdownMenuContent> */}
     </DropdownMenu>
   );
 }
