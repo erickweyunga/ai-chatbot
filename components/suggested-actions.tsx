@@ -20,28 +20,28 @@ function PureSuggestedActions({
 }: SuggestedActionsProps) {
   const suggestedActions = [
     {
-      title: 'Verify CCM election victory',
-      label: 'CCM won 99% of village seats in 2024',
+      title: 'Check COVID-19 vaccination facts',
+      label: 'Latest global vaccination stats and research',
       action:
-        "CCM won 99% of all village chairperson positions in Tanzania's November 2024 local government elections, while opposition parties like Chadema barely secured 1% of seats.",
+        'Provide the latest verified statistics and scientific research on COVID-19 vaccination rates and efficacy worldwide.',
     },
     {
-      title: 'Check President Hassan claim',
-      label: 'First female president in East Africa',
+      title: 'Verify climate change impact',
+      label: 'Scientific consensus and recent data',
       action:
-        'President Samia Suluhu Hassan is the first female president in East African history and the only current female head of state in Africa.',
+        'Summarize the current scientific consensus on climate change and provide recent data on its global environmental impact.',
     },
     {
-      title: 'Fact-check Tundu Lissu case',
-      label: 'Opposition leader serving prison sentence',
+      title: 'Fact-check nutrition myths',
+      label: 'Common misconceptions about diet and health',
       action:
-        "Under President Samia Hassan's administration, opposition leader Tundu Lissu has been arrested seven times in 2024 and is currently serving a 15-year prison sentence for sedition and money laundering charges handed down by the High Court in December 2024.",
+        'Clarify common nutrition myths with evidence-based information from reputable health organizations.',
     },
     {
-      title: 'Verify electoral commission',
-      label: 'Independent commission with full autonomy',
+      title: 'Review space exploration updates',
+      label: 'Recent missions and discoveries',
       action:
-        'President Samia Hassan established an Independent National Electoral Commission (INEC) in 2024 that has full autonomy from the presidency in appointing commissioners and overseeing elections.',
+        'Provide an overview of recent space missions and key discoveries from agencies like NASA and ESA.',
     },
   ];
 

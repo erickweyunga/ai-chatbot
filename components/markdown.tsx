@@ -22,12 +22,12 @@ const components: Components = {
   },
   pre: ({ children }) => <>{children}</>,
   ol: ({ children, ...props }) => (
-    <ol className="list-decimal list-outside ml-6" {...props}>
+    <ol className="list-decimal ml-6" {...props}>
       {children}
     </ol>
   ),
   ul: ({ children, ...props }) => (
-    <ul className="list-disc list-outside ml-6" {...props}>
+    <ul className="list-disc mb-4 space-y-1 ml-6" {...props}>
       {children}
     </ul>
   ),

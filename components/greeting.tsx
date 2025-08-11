@@ -11,18 +11,18 @@ export const Greeting = () => {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 10 }}
         transition={{ delay: 0.5 }}
-        className="text-2xl font-semibold"
+        className="text-3xl font-bold"
       >
-        Tanzania Political Fact-Checker
+        Welcome!
       </motion.div>
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 10 }}
         transition={{ delay: 0.6 }}
-        className="text-2xl text-zinc-500"
+        className="text-xl text-zinc-500 mt-2"
       >
-        Verify political claims with comprehensive research
+        Intelligence that reflects and evolves with you
       </motion.div>
     </div>
   );

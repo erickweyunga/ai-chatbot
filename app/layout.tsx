@@ -7,9 +7,9 @@ import './globals.css';
 import { SessionProvider } from 'next-auth/react';
 
 export const metadata: Metadata = {
-  // metadataBase: new URL('https://tanzacheck.tz'),
-  title: 'TanzaCheck',
-  description: 'AI to validate political information.',
+  // metadataBase: new URL('https://QUINE.tz'),
+  title: 'QUINE',
+  description: 'Intelligence that Reflects',
 };
 
 export const viewport = {
